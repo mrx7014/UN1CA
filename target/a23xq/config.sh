@@ -1,4 +1,4 @@
-UN1CA# Device configuration file for Galaxy A23 5G (SM-A236E)
+# Device configuration file for Galaxy A23 5G (SM-A236E)
 TARGET_NAME="Galaxy A23 5G (SM-A236E)"
 TARGET_CODENAME="a23xq"
 TARGET_FIRMWARE="SM-A236E/THL/R5CTC1D83FP"
