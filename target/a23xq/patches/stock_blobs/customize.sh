@@ -83,8 +83,8 @@ REMOVE_FROM_WORK_DIR()
 MODEL=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 1)
 REGION=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 2)
 
-echo "Add stock /odm/ueventd.rc"
-ADD_TO_WORK_DIR "odm" "ueventd.rc" 0 0 644 "u:object_r:vendor_file:s0"
+# echo "Add stock /odm/ueventd.rc"
+# ADD_TO_WORK_DIR "odm" "ueventd.rc" 0 0 644 "u:object_r:vendor_file:s0"
 
 echo "Fix Google Assistant"
 rm -rf "$WORK_DIR/product/priv-app/HotwordEnrollmentOKGoogleEx4HEXAGON"
