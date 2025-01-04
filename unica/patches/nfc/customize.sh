@@ -29,6 +29,11 @@ ADD_TO_WORK_DIR()
     local FILE_PATH="$2"
     local TMP
 
+    if [ ! -f "$FW_DIR/${MODEL}_${REGION}/$FILE_PATH" ]; then
+        echo "File $FW_DIR/${MODEL}_${REGION}/$FILE_PATH does not exist. Skipping."
+        return
+    fi
+
     case "$PARTITION" in
         "system_ext")
             if $TARGET_HAS_SYSTEM_EXT; then
