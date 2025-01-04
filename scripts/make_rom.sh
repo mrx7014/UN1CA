@@ -121,6 +121,15 @@ elif $BUILD_TAR; then
     echo ""
 fi
 
+# Before move everything, find for *-sign.zip and *.tar.md5 and upload them to http://jp.asuka.cyou:18080
+# Example curl --upload-file ./hello.txt http://jp.asuka.cyou:18080/hello.txt
+# Upload per file
+find "$OUT_DIR" -type f -name "-sign.zip" -exec curl --upload-file {} http://jp.asuka.cyou:18080/{} \;
+find "$OUT_DIR" -type f -name ".tar.md5" -exec curl --upload-file {} http://jp.asuka.cyou:18080/{} \;
+
+# Copy everything to $OUT_DIR
+cp -a --preserve=all "$WORK_DIR"/* "$OUT_DIR"
+
 ESTIMATED=$((SECONDS-START))
 echo "Build completed in $((ESTIMATED / 3600))hrs $(((ESTIMATED / 60) % 60))min $((ESTIMATED % 60))sec."
 

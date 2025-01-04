@@ -70,4 +70,10 @@ jobs:
       - name: Build ROM
         run: |
           source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/make_rom.sh --no-rom-zip --no-rom-tar
+          ./scripts/make_rom.sh
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: rom-artifacts
+          path: /tmp/*.zip,/tmp/*.tar*
