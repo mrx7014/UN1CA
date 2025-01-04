@@ -181,7 +181,6 @@ BLOBS_LIST="
 system/etc/public.libraries-camera.samsung.txt
 system/lib/libSlowShutter_jni.media.samsung.so
 system/lib64/libFace_Landmark_Engine.camera.samsung.so
-system/lib64/libFacialStickerEngine.arcsoft.so
 system/lib64/libHpr_RecFace_dl_v1.0.camera.samsung.so
 system/lib64/libImageCropper.camera.samsung.so
 system/lib64/libImageTagger.camera.samsung.so
