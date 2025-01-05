@@ -70,7 +70,7 @@ jobs:
       - name: Build ROM
         run: |
           source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/make_rom.sh
+          ./scripts/make_rom.sh --no-rom-tar
 
       - name: tar xz full compression 1000000% aura - @mazurikian
         run: |
