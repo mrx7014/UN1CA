@@ -21,6 +21,11 @@ ADD_TO_WORK_DIR()
             ;;
     esac
 
+    if [ ! -e "$FW_DIR/${MODEL}_${REGION}/$FILE_PATH" ]; then
+        echo "File $FW_DIR/${MODEL}_${REGION}/$FILE_PATH not found, skipping..."
+        return
+    fi
+
     mkdir -p "$WORK_DIR/$(dirname "$FILE_PATH")"
     cp -a --preserve=all "$FW_DIR/${MODEL}_${REGION}/$FILE_PATH" "$WORK_DIR/$FILE_PATH"
 
@@ -56,28 +61,6 @@ ADD_TO_WORK_DIR()
         TMP="$(dirname "$TMP")"
     done
 }
-
-REMOVE_FROM_WORK_DIR()
-{
-    local FILE_PATH="$1"
-
-    if [ -e "$FILE_PATH" ]; then
-        local FILE
-        local PARTITION
-        FILE="$(echo -n "$FILE_PATH" | sed "s.$WORK_DIR/..")"
-        PARTITION="$(echo -n "$FILE" | cut -d "/" -f 1)"
-
-        echo "Debloating /$FILE"
-        rm -rf "$FILE_PATH"
-
-        [[ "$PARTITION" == "system" ]] && FILE="$(echo "$FILE" | sed 's.^system/system/.system/.')"
-        FILE="$(echo -n "$FILE" | sed 's/\//\\\//g')"
-        sed -i "/$FILE /d" "$WORK_DIR/configs/fs_config-$PARTITION"
-
-        FILE="$(echo -n "$FILE" | sed 's/\./\\\\\./g')"
-        sed -i "/$FILE /d" "$WORK_DIR/configs/file_context-$PARTITION"
-    fi
-}
 # ]
 
 MODEL=$(echo -n "$TARGET_FIRMWARE" | cut -d "/" -f 1)
@@ -106,7 +89,6 @@ REMOVE_FROM_WORK_DIR "$WORK_DIR/system/system/lib64/wfd_log.so"
 echo "Add stock WFD blobs"
 ADD_TO_WORK_DIR "system" "system/bin/insthk" 0 2000 755 "u:object_r:insthk_exec:s0"
 ADD_TO_WORK_DIR "system" "system/bin/remotedisplay" 0 2000 755 "u:object_r:remotedisplay_exec:s0"
-ADD_TO_WORK_DIR "system" "system/lib/libhdcp2.so" 0 0 644 "u:object_r:system_lib_file:s0"
 ADD_TO_WORK_DIR "system" "system/lib/libremotedisplay_wfd.so" 0 0 644 "u:object_r:system_lib_file:s0"
 ADD_TO_WORK_DIR "system" "system/lib/libremotedisplayservice.so" 0 0 644 "u:object_r:system_lib_file:s0"
 ADD_TO_WORK_DIR "system" "system/lib/libsecuibc.so" 0 0 644 "u:object_r:system_lib_file:s0"
