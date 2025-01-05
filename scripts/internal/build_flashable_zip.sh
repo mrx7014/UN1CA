@@ -503,5 +503,8 @@ signapk -w \
 
 echo "Deleting tmp dir"
 rm -rf "$TMP_DIR"
-
+# tell me a filename with path
+echo "$OUT_DIR/$FILE_NAME-sign.zip"
+# store filename to somewhere
+echo "$OUT_DIR/$FILE_NAME-sign.zip" > $OUT_DIR/rom_path.txt
 exit 0

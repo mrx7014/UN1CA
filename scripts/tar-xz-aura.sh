@@ -16,10 +16,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-# What this script does: Uploads the ROM to transfer.sh mirror/3-rd party server (for example: http://jp.asuka.cyou:18080/)
 set -eu
 
-# upload /home/runner/work/UN1CA/UN1CA/out/build-a23xq.tar.xz
-curl --upload-file "$OUT_DIR/build-a23xq.tar.xz" http://jp.asuka.cyou:18080/ || true
+echo "tar xz full compression 1000000% aura - @mazurikian"
+
+# Compress .zip to .tar.xz, zip path at $OUT_DIR/rom_path.txt, open txt and get path
+# Output is build.tar.xz
+ROM_PATH=$(cat "$OUT_DIR/rom_path.txt")
+tar -cJf "$OUT_DIR/build-a23xq.tar.xz" -C "$OUT_DIR" "$ROM_PATH"
 
 exit 0
