@@ -26,7 +26,10 @@ ROM_PATH=$(cat "$OUT_DIR/rom_path.txt")
 
 # Ensure ROM_PATH is a .zip file
 if [[ "$ROM_PATH" == *.zip ]]; then
-    tar -cJf "$OUT_DIR/build-a23xq.tar.xz" -C "$(dirname "$ROM_PATH")" "$(basename "$ROM_PATH")"
+    # Enable progress tracking using pv (pipe viewer)
+    tar -cf - -C "$(dirname "$ROM_PATH")" "$(basename "$ROM_PATH")" | \
+        pv -s $(du -sb "$ROM_PATH" | awk '{print $1}') | \
+        xz -9e --verbose > "$OUT_DIR/build-a23xq.tar.xz"
 else
     echo "Error: The path in rom_path.txt is not a .zip file."
     exit 1
