@@ -21,8 +21,15 @@ set -eu
 echo "tar xz full compression 1000000% aura - @mazurikian"
 
 # Compress .zip to .tar.xz, zip path at $OUT_DIR/rom_path.txt, open txt and get path
-# Output is build.tar.xz
+# Output is build-a23xq.tar.xz
 ROM_PATH=$(cat "$OUT_DIR/rom_path.txt")
-tar -cJf "$OUT_DIR/build-a23xq.tar.xz" -C "$OUT_DIR" "$ROM_PATH"
+
+# Ensure ROM_PATH is a .zip file
+if [[ "$ROM_PATH" == *.zip ]]; then
+    tar -cJf "$OUT_DIR/build-a23xq.tar.xz" -C "$(dirname "$ROM_PATH")" "$(basename "$ROM_PATH")"
+else
+    echo "Error: The path in rom_path.txt is not a .zip file."
+    exit 1
+fi
 
 exit 0
