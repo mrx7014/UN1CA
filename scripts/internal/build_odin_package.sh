@@ -155,4 +155,6 @@ echo -n "$CHECKSUM" >> "$OUT_DIR/$FILE_NAME.tar" \
 echo "Deleting tmp dir"
 rm -rf "$TMP_DIR"
 
+# rename to build-a23xq-odin.tar.md5
+mv "$OUT_DIR/$FILE_NAME.tar.md5" "$OUT_DIR/build-$TARGET_CODENAME-odin.tar.md5"
 exit 0
