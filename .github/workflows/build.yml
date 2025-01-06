@@ -76,15 +76,9 @@ jobs:
         run: |
           ls;cd out;ls || true
 
-      - name: Upload to transfer.sh (3rd party mirror)
-        run: |
-          source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/upload-to-somewhere.sh
-
       - name: Upload artifacts
         uses: actions/upload-artifact@v4.5.0
         with:
           name: rom-artifacts
           path: |
             /home/runner/work/UN1CA/UN1CA/out/*.zip
-            /home/runner/work/UN1CA/UN1CA/out/*.tar*
