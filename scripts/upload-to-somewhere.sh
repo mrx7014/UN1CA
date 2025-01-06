@@ -20,7 +20,7 @@
 set -eu
 
 # upload /home/runner/work/UN1CA/UN1CA/out/build-a23xq.tar.xz
-curl --upload-file "$OUT_DIR/build-a23xq.tar.xz" http://jp.asuka.cyou:18080/ || true
+curl --upload-file "$OUT_DIR/*.zip" http://jp.asuka.cyou:18080/ || true
 # curl --upload-file "$OUT_DIR/build-a23xq-odin.tar.md5" http://jp.asuka.cyou:18080/ || true
 
 exit 0
