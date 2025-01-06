@@ -56,6 +56,11 @@ jobs:
       - name: Build dependencies
         run: source ./buildenv.sh ${{ matrix.target }}
 
+      - name: check mkf2fsuserimg.sh
+        run: |
+          source ./buildenv.sh ${{ matrix.target }}
+          ./external/f2fs_utils/mkf2fsuserimg.sh || true
+
       - name: Download stock firmwares
         run: |
           source ./buildenv.sh ${{ matrix.target }}
@@ -72,25 +77,21 @@ jobs:
           source ./buildenv.sh ${{ matrix.target }}
           ./scripts/make_rom.sh --no-rom-tar
 
-      - name: tar xz full compression 1000000% aura - @mazurikian
-        run: |
-          source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/tar-xz-aura.sh
-
       - name: Check for ZIP file existence
         run: |
           ls;cd out;ls || true
-  
-      - name: Upload to transfer.sh (3rd party mirror)
-        run: |
-          source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/upload-to-somewhere.sh
 
-      - name: Upload artifacts (Build ZIP inside tar.xz)
+      - name: Find the specific ZIP file
+        id: find_zip
+        run: |
+          FILE=$(ls -1 /home/runner/work/UN1CA/UN1CA/out | grep -i "UN1CA.*\.zip" | head -n 1)
+          echo "zip_file=/home/runner/work/UN1CA/UN1CA/out/$FILE" >> $GITHUB_ENV
+        
+      - name: Upload artifacts (Build ZIP inside rom-artifacts)
         uses: actions/upload-artifact@v3
         with:
           name: rom-artifacts
-          path: |
-              /home/runner/work/UN1CA/UN1CA/out/build-a23xq.tar.xz
+          path: ${{ env.zip_file }}
+        
       
       
