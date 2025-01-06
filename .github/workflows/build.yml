@@ -56,6 +56,11 @@ jobs:
       - name: Build dependencies
         run: source ./buildenv.sh ${{ matrix.target }}
 
+      - name: check mkf2fsuserimg.sh
+        run: |
+          source ./buildenv.sh ${{ matrix.target }}
+          ./external/f2fs_utils/mkf2fsuserimg.sh || true
+
       - name: Download stock firmwares
         run: |
           source ./buildenv.sh ${{ matrix.target }}
