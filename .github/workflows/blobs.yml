@@ -52,12 +52,12 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v4
         with:
-          submodules: 'recursive'
+          submodules: "recursive"
 
       - name: Free disk space
         uses: rokibhasansagar/slimhub_actions@main
         with:
-          retain: 'compiler_cmake'
+          retain: "compiler_cmake"
 
       - name: Set up build environment
         run: |
@@ -76,14 +76,14 @@ jobs:
       - name: Set up JDK 11
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
-          java-version: '11'
-          cache: 'gradle'
+          distribution: "temurin"
+          java-version: "11"
+          cache: "gradle"
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'latest'
+          node-version: "latest"
 
       - name: Build dependencies
         run: source ./buildenv.sh a52sxq
@@ -99,10 +99,10 @@ jobs:
         with:
           add-paths: |
             ${{ matrix.path }}
-          commit-message: '${{ matrix.path }}: update blobs to ${{ env.PDA_BUILD }}'
-          committer: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
-          author: 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
-          branch: '${{ matrix.path }}'
+          commit-message: "${{ matrix.path }}: update blobs to ${{ env.PDA_BUILD }}"
+          committer: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          author: "github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>"
+          branch: "${{ matrix.path }}"
           delete-branch: true
-          title: 'Update ${{ matrix.path }} blobs to ${{ env.PDA_BUILD }}'
-          body: ''
+          title: "Update ${{ matrix.path }} blobs to ${{ env.PDA_BUILD }}"
+          body: ""
