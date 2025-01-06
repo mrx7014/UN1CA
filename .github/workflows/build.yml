@@ -17,12 +17,12 @@ jobs:
         target: [a23xq]
 
     steps:
-      - name: Checkout repo
+      - name: Checkout
         uses: actions/checkout@v4.2.2
         with:
           submodules: "recursive"
 
-      - name: Free disk space
+      - name: GitHub Workflow Cleaner Action
         uses: rokibhasansagar/slimhub_actions@main
         with:
           retain: "compiler_cmake"
@@ -41,17 +41,17 @@ jobs:
           echo -n "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > unica/security/unica_platform.pk8
           echo -n "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > unica/security/unica_platform.x509.pem
 
-      - name: Set up JDK 11
+      - name: Setup Java JDK
         uses: actions/setup-java@v4.6.0
         with:
           distribution: "temurin"
           java-version: "11"
           cache: "gradle"
 
-      - name: Set up Node.js
+      - name: Setup Node.js environment
         uses: actions/setup-node@v4.1.0
         with:
-          node-version: "latest"
+          node-version: "22"
 
       - name: Build dependencies
         run: source ./buildenv.sh ${{ matrix.target }}
@@ -76,9 +76,9 @@ jobs:
         run: |
           ls;cd out;ls || true
 
-      - name: Upload artifacts
+      - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.5.0
         with:
-          name: rom-artifacts
+          name: build-artifact
           path: |
             /home/runner/work/UN1CA/UN1CA/out/*.zip
