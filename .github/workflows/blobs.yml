@@ -39,14 +39,8 @@ jobs:
             path: "unica/mods/china"
           - module: "Eureka blobs"
             path: "unica/mods/eureka"
-          - module: "(a71) OS proprietary blobs"
-            path: "target/a71/patches/stock_blobs"
-          - module: "(m52xq) OS proprietary blobs"
-            path: "target/m52xq/patches/stock_blobs"
-          - module: "(r8q) OS proprietary blobs"
-            path: "target/r8q/patches/stock_blobs"
-          - module: "(r8q) /vendor proprietary blobs"
-            path: "target/r8q/patches/vendor"
+          - module: "(a23xq) OS proprietary blobs"
+            path: "target/a23xq/patches/stock_blobs"
 
     steps:
       - name: Checkout repo
@@ -86,11 +80,11 @@ jobs:
           node-version: "latest"
 
       - name: Build dependencies
-        run: source ./buildenv.sh a52sxq
+        run: source ./buildenv.sh a23xq
 
       - name: Update prebuilt blobs
         run: |
-          source ./buildenv.sh a52sxq
+          source ./buildenv.sh a23xq
           ./scripts/internal/update_prebuilt_blobs.sh ${{ matrix.path }}
           echo "PDA_BUILD=$(cat ./${{ matrix.path }}/.current | cut -d "/" -f 1)" >> $GITHUB_ENV
 

@@ -18,6 +18,9 @@
 
 set -eu
 
+# DEBUG, CHECK mkf2fsuserimg
+mkf2fsuserimg || true
+
 # [
 ROUND_UP_TO_4K()
 {

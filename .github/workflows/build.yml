@@ -70,7 +70,7 @@ jobs:
       - name: Build ROM
         run: |
           source ./buildenv.sh ${{ matrix.target }}
-          ./scripts/make_rom.sh --no-rom-tar
+          ./scripts/make_rom.sh
 
       - name: Check for ZIP file existence
         run: |
@@ -81,4 +81,4 @@ jobs:
         with:
           name: build-artifact
           path: |
-            /home/runner/work/UN1CA/UN1CA/out/*.zip
+            /home/runner/work/UN1CA/UN1CA/out/*.tar
