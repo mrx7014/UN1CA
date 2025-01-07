@@ -452,7 +452,7 @@ done <<< "$(find "$WORK_DIR" -mindepth 1 -maxdepth 1 -type d)"
 echo "Building super_empty.img"
 [ -f "$TMP_DIR/super_empty.img" ] && rm -f "$TMP_DIR/super_empty.img"
 CMD="lpmake $(GENERATE_LPMAKE_OPT)"
-$CMD &> /dev/null
+$CMD &
 
 echo "Generating dynamic_partitions_op_list"
 GENERATE_OP_LIST
