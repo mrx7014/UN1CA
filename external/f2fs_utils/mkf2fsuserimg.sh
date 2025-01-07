@@ -164,7 +164,7 @@ function _truncate()
 
 function _build()
 {
-  MAKE_F2FS_CMD="make_f2fs -g android $MKFS_OPTS $OUTPUT_FILE"
+  MAKE_F2FS_CMD="make_f2fs -g android $MKFS_OPTS $OUTPUT_FILE -d 1"
   echo $MAKE_F2FS_CMD
   $MAKE_F2FS_CMD
   if [ $? -ne 0 ]; then
