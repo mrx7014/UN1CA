@@ -141,6 +141,8 @@ for i in $TARGET_NFC_CHIPNAMES; do
             sed -i "s/\<StopLedCover\>/stopLedCover/g" "$WORK_DIR/system/system/lib64/libnfc_${i}_jni.so"
             sed -i "s/\<TransceiveLedCover\>/transceiveLedCover/g" "$WORK_DIR/system/system/lib64/libnfc_${i}_jni.so"
         fi
+    else
+        echo "File $FW_DIR/${MODEL}_${REGION}/system/system/lib64/libnfc-${i}.so does not exist, skipping."
     fi
 done
 
