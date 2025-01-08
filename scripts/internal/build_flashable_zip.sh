@@ -452,7 +452,7 @@ done <<< "$(find "$WORK_DIR" -mindepth 1 -maxdepth 1 -type d)"
 echo "Building super_empty.img"
 [ -f "$TMP_DIR/super_empty.img" ] && rm -f "$TMP_DIR/super_empty.img"
 CMD="lpmake $(GENERATE_LPMAKE_OPT)"
-$CMD &
+$CMD &> /dev/null
 
 echo "Generating dynamic_partitions_op_list"
 GENERATE_OP_LIST
@@ -503,8 +503,5 @@ signapk -w \
 
 echo "Deleting tmp dir"
 rm -rf "$TMP_DIR"
-# tell me a filename with path
-echo "$OUT_DIR/$FILE_NAME-sign.zip"
-# store filename to somewhere
-echo "$OUT_DIR/$FILE_NAME-sign.zip" > $OUT_DIR/rom_path.txt
+
 exit 0

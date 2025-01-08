@@ -18,9 +18,6 @@
 
 set -eu
 
-# DEBUG, CHECK mkf2fsuserimg
-mkf2fsuserimg || true
-
 # [
 ROUND_UP_TO_4K()
 {
@@ -126,7 +123,7 @@ case "$FS_TYPE" in
     "ext4"*)
         IMG_SIZE="$(GET_DISK_USAGE "$IN_DIR")"
         IMG_SIZE=$(echo "scale=0; ($IMG_SIZE * 1.1) / 1" | bc -l) # 10% headroom to avoid failures
-        IMG_SIZE="$(echo "$IMG_SIZE + 16777216" | bc -l)" # temporarily add 16MB of reserved space
+        IMG_SIZE="$(echo "$IMG_SIZE + 16777216" | bc -l)" # temporarely add 16MB of reserved space
         IMG_SIZE="$(ROUND_UP_TO_4K "$IMG_SIZE")"
         INODES="$(GET_INODE_USAGE "$IN_DIR")"
 
@@ -155,7 +152,7 @@ case "$FS_TYPE" in
     "f2fs"*)
         IMG_SIZE="$(GET_DISK_USAGE "$IN_DIR")"
         IMG_SIZE=$(echo "scale=0; ($IMG_SIZE * 1.1) / 1" | bc -l) # 10% headroom to avoid failures
-        IMG_SIZE="$(echo "$IMG_SIZE + 16777216" | bc -l)" # temporarily add 16MB of reserved space
+        IMG_SIZE="$(echo "$IMG_SIZE + 16777216" | bc -l)" # temporarely add 16MB of reserved space
         IMG_SIZE="$(ROUND_UP_TO_4K "$IMG_SIZE")"
         [[ "$IMG_SIZE" -lt 18882560 ]] && IMG_SIZE=18882560
 
@@ -183,6 +180,5 @@ case "$FS_TYPE" in
         ;;
 esac
 
-echo "Filesystem image built successfully."
-
+echo ""
 exit 0

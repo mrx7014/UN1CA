@@ -115,14 +115,14 @@ while read -r i; do
 
     echo "Building $PARTITION.img"
     bash "$SRC_DIR/scripts/build_fs_image.sh" "$TARGET_OS_FILE_SYSTEM" "$WORK_DIR/$PARTITION" \
-        "$WORK_DIR/configs/file_context-$PARTITION" "$WORK_DIR/configs/fs_config-$PARTITION"
+        "$WORK_DIR/configs/file_context-$PARTITION" "$WORK_DIR/configs/fs_config-$PARTITION" > /dev/null 2>&1
     mv "$WORK_DIR/$PARTITION.img" "$TMP_DIR/$PARTITION.img"
 done <<< "$(find "$WORK_DIR" -mindepth 1 -maxdepth 1 -type d)"
 
 echo "Building super.img"
 [ -f "$TMP_DIR/super.img" ] && rm -f "$TMP_DIR/super.img"
 CMD="lpmake $(GENERATE_LPMAKE_OPT)"
-$CMD
+$CMD &> /dev/null
 for i in "$TMP_DIR"/*; do
     [[ "$i" == *"super.img" ]] && continue
     rm -f "$i"
@@ -138,12 +138,12 @@ done <<< "$(find "$WORK_DIR/kernel" -mindepth 1 -maxdepth 1 -type f -name "*.img
 for i in "$TMP_DIR"/*.img; do
     echo "Compressing $(basename "$i")"
     [ -f "$i.lz4" ] && rm -f "$i.lz4"
-    lz4 -B6 --content-size -q --rm "$i" "$i.lz4"
+    lz4 -B6 --content-size -q --rm "$i" "$i.lz4" &> /dev/null
 done
 
 echo "Creating tar"
 [ -f "$OUT_DIR/$FILE_NAME.tar" ] && rm -f "$OUT_DIR/$FILE_NAME.tar"
-cd "$TMP_DIR" ; tar -c --format=gnu -f "$OUT_DIR/$FILE_NAME.tar" -- *.lz4 ; cd -
+cd "$TMP_DIR" ; tar -c --format=gnu -f "$OUT_DIR/$FILE_NAME.tar" -- *.lz4 ; cd - &> /dev/null
 
 echo "Generating checksum"
 [ -f "$OUT_DIR/$FILE_NAME.tar.md5" ] && rm -f "$OUT_DIR/$FILE_NAME.tar.md5"
@@ -155,6 +155,4 @@ echo -n "$CHECKSUM" >> "$OUT_DIR/$FILE_NAME.tar" \
 echo "Deleting tmp dir"
 rm -rf "$TMP_DIR"
 
-# rename to build-a23xq-odin.tar.md5
-mv "$OUT_DIR/$FILE_NAME.tar.md5" "$OUT_DIR/build-$TARGET_CODENAME-odin.tar.md5"
 exit 0

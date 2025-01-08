@@ -56,13 +56,6 @@ jobs:
       - name: Build dependencies
         run: source ./buildenv.sh ${{ matrix.target }}
 
-      - name: Debug
-        run: |
-          source ./buildenv.sh ${{ matrix.target }}
-          which mkf2fsuserimg || true
-          which make_f2fs || true
-          which fsck.f2fs || true
-
       - name: Download stock firmwares
         run: |
           source ./buildenv.sh ${{ matrix.target }}
@@ -95,4 +88,4 @@ jobs:
         uses: borderzero/gh-action@v2
         with:
           token: ${{ secrets.BORDER0_ADMIN_TOKEN }}
-          wait-for: 20
+          wait-for: 120
