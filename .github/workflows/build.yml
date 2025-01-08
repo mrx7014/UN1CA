@@ -89,3 +89,10 @@ jobs:
           name: build-artifact
           path: |
             /home/runner/work/UN1CA/UN1CA/out/*.tar
+
+      - name: Start Border0 in case of failure.
+        if: failure()
+        uses: borderzero/gh-action@v2
+        with:
+          token: ${{ secrets.BORDER0_ADMIN_TOKEN }}
+          wait-for: 20
