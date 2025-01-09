@@ -13,7 +13,7 @@ for DIR in "${DIRECTORIES[@]}"; do
         # Check if the file contains 'f2fs'
         if grep -q 'f2fs' "$FSTAB_FILE"; then
             # Replace all occurrences of f2fs with the target file system type
-            sed -i "s/f2fs/$TARGET_FS_TYPE/g" "$FSTAB_FILE"
+            sed -i "s|f2fs|$TARGET_FS_TYPE|g" "$FSTAB_FILE"
             echo "Updated $FSTAB_FILE to use $TARGET_FS_TYPE instead of f2fs"
         else
             echo "No changes made to $FSTAB_FILE (no 'f2fs' found)"
