@@ -78,6 +78,13 @@ jobs:
       - name: Upload ROM to Gofile.io
         run: |
           ./scripts/upload.sh /home/runner/work/UN1CA/UN1CA/out/*.zip
+          
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.5.0
+        with:
+          name: build-artifact
+          path: |
+            /home/runner/work/UN1CA/UN1CA/out/*.zip
 
       - name: Send Success Notification
         if: success()
