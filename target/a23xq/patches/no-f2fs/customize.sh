@@ -1,8 +1,5 @@
 SKIPUNZIP=1
 
-# Define the target file system type (ext4 or erofs)
-TARGET_FS_TYPE=${1:-ext4}
-
 # Define the directories to search for fstab files
 DIRECTORIES=("system" "vendor")
 
@@ -13,9 +10,9 @@ for DIR in "${DIRECTORIES[@]}"; do
         # Check if the file contains 'f2fs'
         if grep -q 'f2fs' "$FSTAB_FILE"; then
             # Replace only occurrences of f2fs as the file system type (tab-separated fields)
-            sed -i "s|\tf2fs\t|\t${TARGET_FS_TYPE}\t|g" "$FSTAB_FILE"
+            sed -i 's/\bf2fs\b/ext4/g' "$FSTAB_FILE"
             cat "$FSTAB_FILE"
-            echo "Updated $FSTAB_FILE to use $TARGET_FS_TYPE instead of f2fs"
+            echo "Updated $FSTAB_FILE to use ext4 instead of f2fs"
         else
             echo "No changes made to $FSTAB_FILE (no 'f2fs' found)"
         fi
