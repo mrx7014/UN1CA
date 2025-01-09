@@ -82,6 +82,7 @@ jobs:
           chmod +x ./scripts/upload.sh
           DOWNLOAD_LINK=$(./scripts/upload.sh /home/runner/work/UN1CA/UN1CA/out/*.zip)
           echo "DOWNLOAD_LINK=$DOWNLOAD_LINK" >> $GITHUB_ENV
+        continue-on-error: true
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.5.0
