@@ -1,0 +1,43 @@
+name: SSH Actions (Specially For UN1CA)
+
+on:
+  workflow_dispatch:
+
+jobs:
+  ssh-session:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: List all files
+        run: find . -type f
+
+      - name: Free disk space
+        uses: rokibhasansagar/slimhub_actions@main
+        with:
+          retain: 'compiler_cmake'
+
+      - name: Set up build environment
+        run: |
+          sudo apt update
+          DEBIAN_FRONTEND=noninteractive sudo apt install -yq \
+            attr ccache clang python3 ffmpeg golang \
+            libbrotli-dev libgtest-dev libprotobuf-dev libunwind-dev libpcre2-dev \
+            libzstd-dev linux-modules-extra-$(uname -r) lld protobuf-compiler webp \
+            zipalign
+          sudo modprobe erofs f2fs f2fs-tools
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          echo "${{ secrets.PLATFORM_KEY_PK8 }}" | base64 --decode > unica/security/unica_platform.pk8
+          echo "${{ secrets.PLATFORM_KEY_PEM }}" | base64 --decode > unica/security/unica_platform.x509.pem
+    
+      - name: Set up SSH
+        uses: fastai/workflows/ssh@master
+        with:
+          ssh_key: ${{ secrets.SSH_KEY }}
+          key_file: id_ecdsa
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        timeout-minutes: 360
