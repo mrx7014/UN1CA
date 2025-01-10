@@ -95,7 +95,7 @@ jobs:
         if: success()
         run: |
           ACTION_URL="https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}"
-          curl -X POST https://api.telegram.org/botYOURTOKEN/sendMessage \
+          curl -X POST https://api.telegram.org/bot5477489617:AAHFxTxuvPGgGM_QmoWtIYBPouv-OnTHL64/sendMessage \
             -d chat_id="-1001538361307" \
             -d text="✅ Build finished successfully for target: ${{ github.event.inputs.DEVICE_CODENAME }}. [Download ROM](${DOWNLOAD_LINK}) [View Actions]($ACTION_URL)" \
             -d parse_mode="Markdown"
